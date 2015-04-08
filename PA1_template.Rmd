@@ -7,18 +7,67 @@ output:
 
 
 ## Loading and preprocessing the data
+```{r}
+unzip("activity.zip")
+dd <- read.csv("activity.csv", stringsAsFactors=FALSE)
+dd$date <- as.Date(dd$date, format="%Y-%m-%d")
+str(dd)
 
+```
+
+NEED TO MERGE HOURS MINS DATE!!!
 
 
 ## What is mean total number of steps taken per day?
+Prepare dataset of daily steps
+```{r}
+agg <- aggregate(steps ~ date, data=dd, sum)
+```
+
+Histogram of daily steps
+```{r}
+hist(agg$steps, main="Steps per day", xlab="Steps")
+```
+Mean
+```{r}
+mean(agg$steps)
+```
+Median
+```{r}
+median(agg$steps)
+```
+
 
 
 
 ## What is the average daily activity pattern?
+Create dataset of average steps per 5 minute time chunk
+```{r}
+agg <- aggregate(steps ~ interval, data=dd, mean, na.rm=TRUE)
+agg$interval2 <- agg$interval/100
+```
+```{r}
+plot(steps ~ interval2, agg, type="l", xaxt="n", xlab="Time")
+axis(1, at=seq(0, .24, .06), labels=c("00:00", "06:00", "12:00", "18:00", "24:00"))
+```
+
 
 
 
 ## Imputing missing values
+Vector of mean values matching the appropriate values in original data...
+```{r}
+steps <- agg$steps[match(dd$interval, agg$interval)]
+```
+Replace by the mean value
+```{r}
+dd2 <- dd
+dd_imp$steps[is.na(dd_imp$steps)] <- steps[is.na(dd_imp$steps)]
+```
+
+
+
+
 
 
 

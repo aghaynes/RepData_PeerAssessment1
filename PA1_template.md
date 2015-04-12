@@ -32,6 +32,7 @@ hist(agg$steps, main="Steps per day", xlab="Steps")
 ```
 
 ![plot of chunk unnamed-chunk-3](./PA1_template_files/figure-html/unnamed-chunk-3.png) 
+
 Mean
 
 ```r
@@ -41,6 +42,7 @@ mean(agg$steps)
 ```
 ## [1] 10766
 ```
+
 Median
 
 ```r
@@ -61,7 +63,7 @@ Create dataset of average steps per 5 minute time chunk
 agg <- aggregate(steps ~ interval, data=dd, mean, na.rm=TRUE)
 ```
 
-Use chron:::time to define a time series and avoid stright stretches representing the nonexistant 45 mins between HH55 and HH00.
+Use chron:::time to define a time series and avoid straight stretches representing the nonexistant 45 mins between HH55 and HH00.
 
 
 ```r
@@ -93,7 +95,7 @@ agg$interval[agg$steps == max(agg$steps)]
 ```
 ## [1] 835
 ```
-which presumably corresponds to the travel to work.
+which presumably corresponds to the travel to work or pre-work sports.
 
 ## Imputing missing values
 Vector of mean values matching the appropriate values in original data...
@@ -152,7 +154,7 @@ library(lattice)
 ```
 
 ```r
-xyplot(steps ~ t | weekend, data= agg, layout=c(1, 2), scales=list(at=seq(0, nrow(agg), 72), labels=c("00:00", "06:00", "12:00", "18:00", "24:00")), xlab="Time", type="l")
+xyplot(steps ~ t | weekend, data= agg, layout=c(1, 2), scales=list(at=seq(0, nrow(agg), 72), x.labels=c("00:00", "06:00", "12:00", "18:00", "24:00")), xlab="Time", type="l")
 ```
 
 ![plot of chunk unnamed-chunk-14](./PA1_template_files/figure-html/unnamed-chunk-14.png) 
